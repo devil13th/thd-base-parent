@@ -1,63 +1,54 @@
 package com.thd.tool;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Base64;
 
 public class MyBase64Utils {
+	
 	/**
-	 * <p>
-	 * 将文件转成base64 字符串
-	 * </p>
-	 * 
-	 * @param path
-	 *            文件路径
+	 * 将文件用base64编码
+	 * @param filePath 文件路径
 	 * @return
-	 * @throws Exception
 	 */
-	public static String encodeBase64File(String path) throws Exception {
-		FileInputStream inputFile = null;
-		byte[] buffer;
-		try {
-			File file = new File(path);
-			inputFile = new FileInputStream(file);
-			buffer = new byte[(int) file.length()];
-			inputFile.read(buffer);
-			return new BASE64Encoder().encode(buffer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			inputFile.close();
+	public static String encodeBase64File(String filePath) {
+		if (filePath == null) {
+			return null;
 		}
-		return "";
+		try {
+			byte[] b = Files.readAllBytes(Paths.get(filePath));
+			return Base64.getEncoder().encodeToString(b);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+ 
+		return null;
 	}
-
 	/**
-	 * <p>
-	 * 将base64字符解码保存文件
-	 * </p>
-	 * 
-	 * @param base64Code
-	 * @param targetPath
-	 * @throws Exception
+	 * 将base字符串转换为文件
+	 * @param base64
+	 * @param filePath
+	 * @return
 	 */
-	public static void decoderBase64File(String base64Code, String targetPath)
-			throws Exception {
-		FileOutputStream out = null;
-		try {
-			byte[] buffer = new BASE64Decoder().decodeBuffer(base64Code);
-			out = new FileOutputStream(targetPath);
-			out.write(buffer);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			out.close();
+	public static void decoderBase64File(String base64, String filePath) {
+		if (base64 == null && filePath == null) {
+            throw new RuntimeException( "生成文件失败，请给出相应的数据。");
 		}
+		try {
+			Files.write(Paths.get(filePath), Base64.getDecoder().decode(base64),StandardOpenOption.CREATE);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
+
+
+
+	
 	/**
 	 * <p>
 	 * 将base64字符保存文本文件
@@ -86,8 +77,9 @@ public class MyBase64Utils {
 	 * @param str
 	 * @return
 	 */
-	public static String encodeStr(String str){
-		return new BASE64Encoder().encode(str.getBytes());
+	public static String encodeStr(String str) throws Exception{
+		return Base64.getEncoder().encodeToString(str.getBytes("utf-8"));
+		//return new Base64.getEncoder().encodeToString(str.getBytes());
 	}
 	
 	/**
@@ -98,7 +90,9 @@ public class MyBase64Utils {
 	public static String decodeStr(String str){
 		String ret="";
 		try {
-			ret=  new String(new BASE64Decoder().decodeBuffer(str));
+			
+			ret = new String(Base64.getDecoder().decode(str));
+			//ret=  new String(new BASE64Decoder().decodeBuffer(str));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
