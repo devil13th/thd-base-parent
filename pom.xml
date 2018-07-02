@@ -32,7 +32,6 @@
 	</parent>
 
 
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
