@@ -11,14 +11,11 @@ import io.jsonwebtoken.Claims;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.thd.tool.bean.JwtClaims;
 
 public class MyJwtAssistUtils {
-	private Logger log = Logger.getLogger(MyJwtAssistUtils.class);
 	/**
 	 * 获取cookie中某个名称的值
 	 * @param req HttpServletRequest

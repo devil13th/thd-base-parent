@@ -18,15 +18,13 @@ import java.util.Map;
 
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.log4j.Logger;
-
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.thd.tool.bean.JwtClaims;
 
 public class MyJwtUtils {
 	public static String sign(JwtClaims claim,Map info) {
-		Logger log = Logger.getLogger(MyJwtUtils.class);
+		
 		if(claim.getSercurityStr() == null){
 			throw new RuntimeException(" property named sercurityStr of claims can not be null");
 		}
@@ -83,7 +81,7 @@ public class MyJwtUtils {
 		
 		
 		
-		log.info("token期限：" + MyDateUtils.toString(new Date(claim.getExpire()), "yyyy-MM-dd hh:mm:ss"));
+		System.out.println("[" + MyJwtUtils.class.getName() + "] token期限：" + MyDateUtils.toString(new Date(claim.getExpire()), "yyyy-MM-dd hh:mm:ss"));
 		
 		String jwt = builder.compact();
 		return jwt;
@@ -91,7 +89,6 @@ public class MyJwtUtils {
 	
 	
 	public static Claims parse(JwtClaims claim,String jwt) throws Exception{
-		Logger log = Logger.getLogger(MyJwtUtils.class);
 		//Verify JWT (HS256)
 		try {
 			/* 验证秘钥、被签发者、签发者
@@ -102,7 +99,6 @@ public class MyJwtUtils {
 			
 		    JWTVerifier verifier = new JWTVerifier(claim.getSercurityStr(),claim.getAud(),claim.getIss());
 		    Map<String,Object> resMap = verifier.verify(jwt);
-		    log.info(resMap);
 		    
 		    Claims claims = Jwts.parser()        
 		 		   .setSigningKey(claim.getSercurityStr().getBytes())
