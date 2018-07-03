@@ -3,18 +3,11 @@ package com.thd.util.service;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.thd.tool.bean.Page;
 import com.thd.tool.queryfilter.SqlQueryFilter;
 import com.thd.util.dao.PubDaoImpl;
 
 public interface PubService {
-	/**
-	 * 获取日志对象
-	 * @return 日志对象
-	 */
-	public Logger getLog();
 	/**
 	 * 保存对象
 	 * @param obj POJO类

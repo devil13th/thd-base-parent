@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.thd.tool.MyListUtils;
@@ -26,16 +25,6 @@ public class PubServiceImpl implements PubService{
 		this.pubDaoImpl = pubDaoImpl;
 	}
 
-
-	//日志
-	private Logger log = Logger.getLogger(this.getClass());
-	
-	/*
-	 * @see com.thd.service.PubService#getLog()
-	 */
-	public Logger getLog() {
-		return log;
-	}
 	
 	/*
 	 * @see com.ccse.core.service.PubService#delete(java.lang.Object)
@@ -98,7 +87,7 @@ public class PubServiceImpl implements PubService{
 		*/
 		
 		String countSql = "select count(*) from ( " + sql + ")  countTab";
-		this.getLog().info(countSql);
+		System.out.println("[" + this.getClass().getName() + "] countSql :" +  countSql);
 		List countSqlList = this.pubDaoImpl.findBySql(countSql);
 		int listCt = 0;
 		try{
@@ -141,7 +130,7 @@ public class PubServiceImpl implements PubService{
 		return this.pubDaoImpl.findBySql(sql, params, page.getCurrentPage(), page.getPageSize());
 		*/
 		String countSql = "select count(*) from ( " + sql + ")  countTab";
-		this.getLog().info(countSql);
+		System.out.println("[" + this.getClass().getName() + "] countSql :" +  countSql);
 		List countSqlList = this.pubDaoImpl.findBySql(countSql);
 		int listCt = 0;
 		try{

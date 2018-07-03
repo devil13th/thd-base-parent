@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,6 @@ public class JdbcDao {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 	
-	public Logger logger = Logger.getLogger(this.getClass());
 	
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
@@ -37,8 +35,8 @@ public class JdbcDao {
 	}
 	
 	public List<Map<String,Object>> query(String sql,Object[] params,Page p){
-		logger.info("execute query SQL : " + sql);
-		logger.info("execute query SQL PARAMS : " );
+		System.out.println("[" + this.getClass().getName() + "] execute query SQL : " + sql);
+		System.out.println("[" + this.getClass().getName() + "] execute query SQL PARAMS : ");
 		if(params!=null){
 			for(Object obj : params ){
 				System.out.println(obj);
@@ -54,9 +52,8 @@ public class JdbcDao {
 	
 	public int queryCount(String sql,Object[] params){
 		String ctSql = "select count(1) as ct from (" + sql + ") as result";
-		
-		logger.info("execute query SQL : " + ctSql);
-		logger.info("execute query SQL PARAMS : " );
+		System.out.println("[" + this.getClass().getName() + "] execute queryCount() : " + ctSql);
+		System.out.println("[" + this.getClass().getName() + "] execute query SQL PARAMS : " + ctSql);
 		if(params!=null){
 			for(Object obj : params ){
 				System.out.println(obj);

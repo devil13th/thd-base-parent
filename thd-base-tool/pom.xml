@@ -15,8 +15,6 @@
 		<beanutilsVersion>1.9.2</beanutilsVersion>
 		<jsonwebtokenVersion>0.6.0</jsonwebtokenVersion>
 		<auth0Version>2.2.0</auth0Version>
-		
-		
 	</properties>
 	
 	<dependencies>
