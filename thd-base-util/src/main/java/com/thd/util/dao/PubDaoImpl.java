@@ -1,17 +1,16 @@
 package com.thd.util.dao;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.orm.hibernate5.HibernateCallback;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
@@ -21,10 +20,10 @@ import com.thd.tool.MyBeanUtils;
 import com.thd.tool.bean.Page;
 @Repository(value="pubDaoImpl")  
 public class PubDaoImpl extends HibernateDaoSupport implements PubDao{
-	@Resource
-	public void setSessionFactory0(SessionFactory sessionFactory){  
-		super.setSessionFactory(sessionFactory);  
-	}
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	
 	/**
 	 * @description 保存对象
 	 * @param obj 保存的对象
