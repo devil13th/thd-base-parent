@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.thd.tool.MyBeanUtils;
 import com.thd.tool.bean.Page;
-@Repository(value="pubDaoImpl")  
+//@Repository(value="pubDaoImpl")  
 public class PubDaoImpl extends HibernateDaoSupport implements PubDao{
 	@PersistenceContext
 	private EntityManager entityManager;

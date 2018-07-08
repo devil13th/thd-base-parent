@@ -12,7 +12,7 @@ import com.thd.tool.bean.Page;
 import com.thd.tool.queryfilter.SqlQueryFilter;
 import com.thd.util.dao.PubDaoImpl;
 
-@Service("pubServiceImpl")
+//@Service("pubServiceImpl")
 public class PubServiceImpl implements PubService{
 	@Resource
 	private PubDaoImpl pubDaoImpl;
