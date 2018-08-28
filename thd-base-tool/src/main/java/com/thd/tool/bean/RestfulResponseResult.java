@@ -3,6 +3,9 @@ package com.thd.tool.bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.thd.tool.exception.MyException;
+
 
 /**
  * 该类是用于restful服务出现错误时返回客户端的DTO
@@ -19,6 +22,9 @@ public class RestfulResponseResult {
 	private Object result;
 	//消息
     private String message;
+    //错误
+    @JsonIgnore
+    private Exception exception;
 
     
     public static ResponseEntity returnSuccess(Object obj){
@@ -37,6 +43,32 @@ public class RestfulResponseResult {
     	return new ResponseEntity<RestfulResponseResult>(rrr,rrr.getHttpStatus());
     }
     
+    public static ResponseEntity returnFailure(HttpStatus httpStatus,String message,Exception e){
+    	RestfulResponseResult rrr = new RestfulResponseResult();
+    	rrr.setHttpStatus(httpStatus);
+    	rrr.setHttpCode(httpStatus.value());
+    	rrr.setMessage(message);
+    	return new ResponseEntity<RestfulResponseResult>(rrr,rrr.getHttpStatus());
+    }
+    
+    public static ResponseEntity returnFailure(Exception e){
+    	RestfulResponseResult rrr = new RestfulResponseResult();
+    	rrr.setException(e);
+    	rrr.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+    	rrr.setHttpCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    	
+    	boolean isFather = MyException.class.isAssignableFrom(e.getClass());  
+    	
+    	//如果是业务主动抛出的异常则将错误信息设置到message属性上
+    	if( isFather){
+    		rrr.setMessage(e.getMessage());
+    	}else{
+    		rrr.setMessage("系统错误");
+    	}
+    	System.out.println(e.getClass());
+    	return new ResponseEntity<RestfulResponseResult>(rrr,rrr.getHttpStatus());
+    }
+    
     
     
 
@@ -45,6 +77,16 @@ public class RestfulResponseResult {
 	}
 	public void setHttpStatus(HttpStatus httpStatus) {
 		this.httpStatus = httpStatus;
+	}
+
+	
+
+	public Exception getException() {
+		return exception;
+	}
+
+	public void setException(Exception exception) {
+		this.exception = exception;
 	}
 
 	public Object getResult() {
